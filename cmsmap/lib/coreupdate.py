@@ -94,16 +94,13 @@ class CoreUpdate:
                 p = subprocess.Popen("git -C " + self.edbpath + " status -uno", stdout=subprocess.PIPE,shell=True, universal_newlines=True)
                 output, error = p.communicate()
                 if re.search('behind', output):
-                    msg = "ExploitDB and CMSmap plugins are not updated to the latest version"
-                    report.message(msg)
-                    msg = "Would you like to update it?"
+                    msg = "ExploitDB and CMSmap plugins are not updated to the latest version. Updating..."
                     report.message(msg)
                     if not initializer.default:
-                        if input("[y/N]: ").lower().startswith('y'):
-                            process = os.system("git -C " + self.edbpath + " pull")
-                            self.UpdateCMSVersions()
-                            self.UpdateLocalPlugins()
-                            self.UpdateTmpCMS()
+                        process = os.system("git -C " + self.edbpath + " pull")
+                        self.UpdateCMSVersions()
+                        self.UpdateLocalPlugins()
+                        self.UpdateTmpCMS()
             else:
                 msg = "ExploitDB Git repository was not found"
                 report.error(msg)
